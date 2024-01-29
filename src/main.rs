@@ -32,5 +32,6 @@ fn login_handler(state: String, code: String, cookies: &CookieJar<'_>) -> String
 fn rocket() -> Rocket<Build> {
     // Parse the .env file
     dotenv().ok();
+    println!("The arguments {:?}\n", std::env::vars());
     rocket::build().mount("/", routes![root, login_screen, login_handler])
 }

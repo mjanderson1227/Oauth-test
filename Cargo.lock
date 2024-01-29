@@ -1190,15 +1190,12 @@ dependencies = [
  "percent-encoding",
  "pin-project-lite",
  "ref-cast",
- "rustls",
- "rustls-pemfile",
  "serde",
  "smallvec",
  "stable-pattern",
  "state",
  "time",
  "tokio",
- "tokio-rustls",
  "uncased",
 ]
 
