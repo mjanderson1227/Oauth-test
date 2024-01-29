@@ -39,4 +39,6 @@ impl OAuthClient {
             ))
             .url()
     }
+
+    pub fn validate_auth_token() {}
 }
