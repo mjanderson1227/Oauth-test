@@ -14,7 +14,7 @@ fn login_screen(cookies: &CookieJar<'_>) -> Redirect {
     let oauth_client = auth::OAuthClient::new();
     let (auth_url, csrf_token) = oauth_client.gen_auth_url();
     /* TODO: Fix this later as it could be unsafe. (Eventually move over to using private cookies)*/
-    let csrf_cookie = Cookie::build(("oauth_csrf", csrf_token.secret().to_owned()))
+    let csrf_cookie = Cookie::build(("oauth_csrf", csrf_token.secret().to_string()))
         .path("/callback")
         .same_site(SameSite::Lax)
         .build();

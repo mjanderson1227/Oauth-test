@@ -11,20 +11,23 @@ pub struct OAuthClient {
 
 impl OAuthClient {
     pub fn new() -> Self {
-        let client_id = ClientId::new(var("CLIENT_ID").expect("Unable to find client id.\n"));
-        let client_secret = Some(ClientSecret::new(
-            var("CLIENT_SECRET").expect("Unable to find secret key.\n"),
-        ));
-        let auth_url = AuthUrl::new("https://accounts.google.com/o/oauth2/v2/auth".to_string())
-            .expect("Unable to acquire auth url.\n");
-        let token_url = Some(
-            TokenUrl::new("https://oauth2.googleapis.com/token".to_string())
-                .expect("Invalid token URL\n"),
+        let client = BasicClient::new(
+            ClientId::new(var("CLIENT_ID").expect("Unable to find client id.\n")),
+            Some(ClientSecret::new(
+                var("CLIENT_SECRET").expect("Unable to find secret key.\n"),
+            )),
+            AuthUrl::new("https://accounts.google.com/o/oauth2/v2/auth".to_string())
+                .expect("Unable to acquire auth url.\n"),
+            Some(
+                TokenUrl::new("https://oauth2.googleapis.com/token".to_string())
+                    .expect("Invalid token URL\n"),
+            ),
+        )
+        .set_redirect_uri(
+            RedirectUrl::new("http://127.0.0.1:8000/callback".to_string())
+                .expect("Invalid redirect URL\n"),
         );
-        let redirect = RedirectUrl::new("http://127.0.0.1:8000/callback".to_string())
-            .expect("Invalid token URL");
-        let client = BasicClient::new(client_id, client_secret, auth_url, token_url)
-            .set_redirect_uri(redirect);
+
         Self { client }
     }
 
@@ -39,6 +42,4 @@ impl OAuthClient {
             ))
             .url()
     }
-
-    pub fn validate_auth_token() {}
 }
